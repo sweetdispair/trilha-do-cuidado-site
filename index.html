@@ -1,0 +1,1551 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trilha do Cuidado</title>
+<meta name="description" content="Trilha do Cuidado: ferramenta gratuita e acessível de apoio ao autocuidado e à saúde mental, do Programa Cuidar em Rede.">
+<meta name="author" content="Débora Santos; Suely Pereira de Faria">
+<meta name="theme-color" content="#1d7a5c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+:root{
+  --bg:#eef5f0;--bg2:#dcebe2;--fg:#17302a;--muted:#46615a;--card:#ffffff;--bd:#b8d0c3;
+  --ac:#1d7a5c;--ac-fg:#ffffff;--ac-soft:#d6efe3;--sun:#f2b84b;--warn:#8a3b12;--warn-bg:#fff1e6;--ok:#14633f;
+  --focus:#d9480f;--shadow:0 6px 18px rgba(23,48,42,.10);
+}
+body.contraste{
+  --bg:#000;--bg2:#000;--fg:#fff;--muted:#fff;--card:#000;--bd:#fff;--ac:#ffe600;--ac-fg:#000;--ac-soft:#1a1a00;
+  --sun:#ffe600;--warn:#ffb36b;--warn-bg:#000;--ok:#7dff9b;--focus:#00e5ff;--shadow:none;
+}
+html{font-size:100%}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,var(--bg2),var(--bg) 280px);color:var(--fg);
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.55;font-size:1.0625rem;padding-bottom:7.5rem}
+body.contraste{background:#000}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1rem}
+.skip{position:absolute;left:-999px;top:.5rem;background:var(--ac);color:var(--ac-fg);padding:.8rem 1rem;border-radius:8px;z-index:100;font-weight:700}
+.skip:focus{left:.5rem}
+header.top{padding:1.2rem 0 .4rem}
+.brand{display:flex;align-items:center;gap:.8rem}
+.logo{width:3.4rem;height:3.4rem;flex:none}
+h1{font-size:1.6rem;margin:0;line-height:1.15}
+.sub{margin:.1rem 0 0;color:var(--muted);font-size:.95rem}
+h2{font-size:1.35rem;margin:.2rem 0 .7rem}
+h3{font-size:1.1rem;margin:.1rem 0 .5rem}
+.card{background:var(--card);border:2px solid var(--bd);border-radius:18px;padding:1.1rem;margin:1rem 0;box-shadow:var(--shadow)}
+.card.warn{border-color:var(--warn);background:var(--warn-bg)}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;margin:.6rem 0}
+.row>*{flex:1 1 9rem}
+button,select,textarea,input{font:inherit;color:var(--fg)}
+.btn{min-height:3.1rem;padding:.65rem 1rem;border-radius:14px;border:2px solid var(--ac);background:var(--card);color:var(--fg);cursor:pointer;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;text-align:center;transition:transform .08s,background .15s}
+.btn:active{transform:scale(.97)}
+.btn:hover{background:var(--ac-soft)}
+.btn.primary{background:var(--ac);color:var(--ac-fg);border-color:var(--ac)}
+.btn.primary:hover{filter:brightness(1.08);background:var(--ac)}
+.btn.danger{border-color:var(--warn);color:var(--warn)}
+.btn.sm{min-height:2.4rem;padding:.35rem .75rem;font-size:.88rem}
+.btn[aria-pressed=true],.btn.on{background:var(--ac);color:var(--ac-fg)}
+.btn .estado{font-size:.8rem;font-weight:700;padding:.1rem .5rem;border-radius:99px;background:rgba(0,0,0,.15)}
+body.contraste .btn[aria-pressed=true] .estado{background:rgba(0,0,0,.25)}
+:focus-visible{outline:4px solid var(--focus);outline-offset:3px;border-radius:10px}
+.humor{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem}
+.humor .btn{flex-direction:column;padding:.6rem .2rem;min-height:5.2rem;font-size:.85rem}
+.humor .face{font-size:1.9rem;line-height:1}
+textarea,select,input[type=text],input[type=email],input[type=password]{width:100%;padding:.7rem;border:2px solid var(--bd);border-radius:12px;background:var(--card);min-height:3.1rem}
+textarea{min-height:5.5rem;resize:vertical}
+label{display:block;font-weight:700;margin:.8rem 0 .3rem}
+.hint{color:var(--muted);font-size:.92rem;margin:.2rem 0}
+.bar{height:1.3rem;background:var(--bg2);border:2px solid var(--bd);border-radius:99px;overflow:hidden}
+.bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--sun));width:0;transition:width .5s}
+body.menos-mov .bar>span{transition:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;text-align:center}
+.stat{background:var(--ac-soft);border-radius:14px;padding:.6rem .3rem}
+.stat b{display:block;font-size:1.5rem;line-height:1.1}
+.stat span{font-size:.82rem;color:var(--muted)}
+body.contraste .stat{border:2px solid #fff}
+.mission{display:flex;gap:.8rem;align-items:center;padding:.8rem;border:2px solid var(--bd);border-radius:14px;margin:.5rem 0;background:var(--card)}
+.mission .ico{font-size:1.6rem;flex:none}
+.mission .txt{flex:1}
+.mission .txt small{display:block;color:var(--muted)}
+.mission.feita{background:var(--ac-soft);border-color:var(--ac)}
+.mission .btn{flex:none;min-width:7.5rem}
+.mapa{width:100%;height:auto;display:block;border-radius:14px}
+.badges{display:flex;flex-wrap:wrap;gap:.5rem;padding:0;margin:.5rem 0;list-style:none}
+.badge{padding:.4rem .8rem;border-radius:99px;border:2px dashed var(--bd);color:var(--muted);font-weight:600;font-size:.92rem}
+.badge.ganha{border:2px solid var(--ac);color:var(--fg);background:var(--ac-soft)}
+.circ-wrap{display:flex;justify-content:center;padding:1rem 0}
+.circ{width:11rem;height:11rem;border-radius:50%;background:radial-gradient(circle,var(--ac-soft),var(--card));border:8px solid var(--ac);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;
+  transform:scale(.8);transition:transform 4s ease-in-out}
+.circ.cheio{transform:scale(1.2)}
+body.menos-mov .circ{transition:none;transform:none}
+.lista{list-style:none;margin:0;padding:0}
+.lista li{padding:.85rem;border:2px solid var(--bd);border-radius:14px;margin:.6rem 0;background:var(--card)}
+.lista li small{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{padding:.5rem .9rem;border-radius:99px;border:2px solid var(--bd);background:var(--card);cursor:pointer;font-weight:600;min-height:2.8rem}
+.chip[aria-pressed=true]{background:var(--ac);color:var(--ac-fg);border-color:var(--ac)}
+.scale{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+@media(min-width:480px){.scale{grid-template-columns:repeat(4,1fr)}}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--bd);padding:.55rem;text-align:left}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:2px solid var(--bd);z-index:50;padding:.4rem .4rem calc(.4rem + env(safe-area-inset-bottom))}
+.tabs ul{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:.25rem;max-width:46rem}
+.tabs li{flex:1}
+.tab{width:100%;min-height:3.3rem;border:2px solid transparent;border-radius:14px;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--muted);padding:.2rem}
+.tab .i{font-size:1.3rem;line-height:1}
+.tab[aria-current=page]{background:var(--ac);color:var(--ac-fg)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:8rem;background:var(--fg);color:var(--bg);padding:.8rem 1.1rem;border-radius:14px;z-index:80;max-width:90%;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s}
+body.contraste .toast{background:#fff;color:#000}
+.toast.show{opacity:1}
+.confete{position:fixed;inset:0;pointer-events:none;z-index:90}
+details summary{cursor:pointer;font-weight:700;min-height:2.75rem;display:flex;align-items:center}
+footer.rod{color:var(--muted);font-size:.88rem;padding:1rem 0}
+.auth-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;background:var(--ac-soft);border:2px solid var(--ac);border-radius:14px;padding:.75rem 1rem;margin:.8rem 0}
+.tag-cat{display:inline-block;font-size:.78rem;font-weight:700;padding:.15rem .6rem;border-radius:99px;background:var(--ac-soft);color:var(--fg);border:1px solid var(--ac);margin-left:.4rem}
+.check-line{display:flex;align-items:center;gap:.5rem;margin:.7rem 0;font-weight:600;cursor:pointer}
+.check-line input{width:1.25rem;height:1.25rem;accent-color:var(--ac)}
+@media (max-width:620px){.tab{min-height:3rem;font-size:.66rem}body{padding-bottom:9.5rem}.toast{bottom:10rem}}
+@media (max-width:420px){.mission{flex-wrap:wrap}.mission .btn{width:100%}}
+body.espaco{line-height:1.9;letter-spacing:.12em;word-spacing:.16em}
+body.espaco p,body.espaco li{margin-bottom:2em}
+.urgente{line-height:1.35;background:var(--warn-bg);border-bottom:3px solid var(--warn);color:var(--warn);font-weight:700;text-align:center;padding:.55rem 1rem;font-size:.95rem}
+.urgente a{min-width:2.75rem;text-align:center;color:inherit;text-decoration:underline;font-weight:800;padding:.3rem .2rem;display:inline-block;min-height:2.75rem}
+body.contraste .urgente{line-height:1.35;border-color:#ffb36b;color:#ffb36b}
+.net{display:inline-block;font-size:.8rem;font-weight:700;padding:.15rem .6rem;border-radius:99px;border:2px solid var(--bd);margin-left:.4rem}
+.net.off{border-color:var(--warn);color:var(--warn)}
+.prose h3{margin-top:1.2rem}.prose ol,.prose ul{padding-left:1.3rem}.prose li{margin:.35rem 0}
+a{color:var(--ac)}body.contraste a{color:#00e5ff}
+a.btn{text-decoration:none;color:var(--fg)}a.btn.primary{color:var(--ac-fg)}
+.ver{font-variant-numeric:tabular-nums}
+fieldset{min-width:0}
+@media print{.tabs,.urgente,.skip,.toast,.noprint{display:none!important}[data-tela]{display:block!important}body{background:#fff;color:#000;padding:0}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#principal">Ir para o conteúdo principal</a>
+<div class="urgente" role="region" aria-label="Ajuda urgente">Em crise ou risco de vida? Ligue <a href="tel:188">188</a> (CVV, 24 h) ou <a href="tel:192">192</a> (SAMU).</div>
+<div id="toast" class="toast" aria-hidden="true"></div>
+<div id="voz-status" class="sr" role="status" aria-live="polite"></div>
+
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 64 64" role="img" aria-label="Logotipo da Trilha do Cuidado: uma folha sobre uma trilha">
+      <circle cx="32" cy="32" r="30" fill="#1d7a5c"/>
+      <path d="M12 50 C 26 40, 34 44, 52 30" stroke="#f2b84b" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="1 8"/>
+      <path d="M32 12 C 46 16, 48 30, 34 38 C 20 32, 20 18, 32 12 Z" fill="#d6efe3"/>
+      <path d="M33 16 L34 36" stroke="#1d7a5c" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <h1>Trilha do Cuidado</h1>
+      <p class="sub">Ferramenta gratuita de apoio ao autocuidado do Programa Cuidar em Rede. <span id="net" class="net" role="status">Conectado</span></p>
+    </div>
+  </div>
+</header>
+
+<!-- BARRA DE CONTA LOGADA -->
+<div id="userBar" class="auth-bar noprint" hidden>
+  <div>
+    <strong id="userNome">Olá!</strong>
+    <span class="hint" id="syncStatus" style="display:block;margin:0">Progresso diário sincronizado na sua conta.</span>
+  </div>
+  <button class="btn sm" id="btnSair" type="button">Sair da conta</button>
+</div>
+
+<!-- ÁREA DE LOGIN / CADASTRO -->
+<section id="authCard" class="card noprint" aria-labelledby="h-auth">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+    <h2 id="h-auth" style="margin:0">Acesse sua conta</h2>
+    <div class="chips">
+      <button class="chip" id="tabLogin" type="button" aria-pressed="true">Entrar</button>
+      <button class="chip" id="tabCad" type="button" aria-pressed="false">Criar conta</button>
+    </div>
+  </div>
+  <p class="hint">Entre ou cadastre-se gratuitamente para salvar sua trilha diária, acessar de qualquer aparelho e participar do mural.</p>
+
+  <form id="formLogin" novalidate>
+    <label for="loginEmail">E-mail</label>
+    <input type="email" id="loginEmail" autocomplete="email" required>
+    <label for="loginSenha">Senha</label>
+    <input type="password" id="loginSenha" autocomplete="current-password" required>
+    <div class="row">
+      <button class="btn primary" type="submit">Entrar na trilha</button>
+      <button class="btn" id="btnEsqueci" type="button">Esqueci minha senha</button>
+    </div>
+  </form>
+
+  <form id="formCadastro" hidden novalidate>
+    <label for="cadNome">Como você gostaria de ser chamado(a)?</label>
+    <input type="text" id="cadNome" autocomplete="name" required>
+    <label for="cadEmail">E-mail</label>
+    <input type="email" id="cadEmail" autocomplete="email" required>
+    <label for="cadSenha">Crie uma senha (mínimo 6 caracteres)</label>
+    <input type="password" id="cadSenha" autocomplete="new-password" minlength="6" required>
+    <div class="row">
+      <button class="btn primary" type="submit">Criar conta gratuita</button>
+    </div>
+  </form>
+
+  <div style="margin-top:.6rem;border-top:1px solid var(--bd);padding-top:.6rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+    <span class="hint" id="authMsg"></span>
+    <button class="btn sm" id="btnOcultarAuth" type="button">Usar sem conta por enquanto</button>
+  </div>
+</section>
+
+<div id="authAvisoReabrir" class="noprint" hidden style="margin:.6rem 0">
+  <button class="btn sm" id="btnAbrirAuth" type="button">Entrar ou criar conta para salvar na nuvem</button>
+</div>
+
+<main id="principal" tabindex="-1">
+
+<section id="t-hoje" data-tela aria-labelledby="h-hoje">
+  <h2 id="h-hoje">Olá! Como está seu dia?</h2>
+  <p class="hint" id="dataHojeTxt" style="margin-top:-.4rem"></p>
+
+  <div class="card">
+    <div class="stats" aria-label="Resumo do seu progresso">
+      <div class="stat"><b id="sNivel">1</b><span>Nível</span></div>
+      <div class="stat"><b id="sDias">0</b><span>Dias de cuidado</span></div>
+      <div class="stat"><b id="sSemente">0</b><span>Sementes</span></div>
+    </div>
+    <p class="hint" style="margin-top:.8rem">Trilha de hoje (renova diariamente)</p>
+    <div class="bar" role="progressbar" aria-label="Missões de hoje" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barra"><span id="barraI"></span></div>
+    <p id="txtProg" class="hint">0 de 5 missões concluídas.</p>
+  </div>
+
+  <div class="card">
+    <h3 id="h-humor">Como você está se sentindo agora?</h3>
+    <div class="humor" role="group" aria-labelledby="h-humor" id="humorGrp"></div>
+  </div>
+
+  <div class="card">
+    <h3>Missões de hoje</h3>
+    <div id="missoes"></div>
+    <div class="row"><button class="btn" id="btnDescanso" type="button" aria-pressed="false"><span aria-hidden="true">🌙</span> Hoje é dia de descanso <span class="estado" id="estDescanso">Não</span></button></div>
+    <p class="hint">Faltou algo? Tudo bem. Dias de descanso mantêm seu progresso, sem culpa.</p>
+  </div>
+
+  <div class="card">
+    <h3>Seu território</h3>
+    <svg id="mapa" class="mapa" viewBox="0 0 400 190" role="img" aria-label="Mapa do território"></svg>
+    <p id="txtMapa" class="hint"></p>
+    <h3>Conquistas</h3>
+    <ul class="badges" id="badges"></ul>
+  </div>
+</section>
+
+<section id="t-respira" data-tela hidden aria-labelledby="h-resp">
+  <h2 id="h-resp">Respirar</h2>
+  <div class="card">
+    <p>Siga o círculo. Quando ele crescer, inspire. Quando diminuir, solte o ar devagar. São quatro ciclos.</p>
+    <div class="chips" role="group" aria-label="Ritmo da respiração">
+      <button class="chip" type="button" data-ritmo="4" aria-pressed="true">Suave (4 s)</button>
+      <button class="chip" type="button" data-ritmo="6" aria-pressed="false">Lento (6 s)</button>
+    </div>
+    <div class="circ-wrap"><div id="circ" class="circ" aria-hidden="true">Pronto</div></div>
+    <p id="respTxt" role="status" aria-live="polite" class="hint" style="text-align:center;font-size:1.05rem">Toque em Começar.</p>
+    <div class="row">
+      <button class="btn primary" id="respBtn" type="button">Começar</button>
+      <button class="btn" id="vibBtn" type="button" aria-pressed="true"><span aria-hidden="true">📳</span> Vibração <span class="estado" id="estVib">Ligada</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="t-carta" data-tela hidden aria-labelledby="h-carta">
+  <h2 id="h-carta">Carta de pensamento</h2>
+  <div class="card">
+    <p class="hint">Escrever ajuda a olhar para um pensamento com mais calma. Suas cartas são privadas e visíveis apenas na sua conta.</p>
+    <form id="formCarta" novalidate>
+      <label for="c1">O que aconteceu?</label>
+      <textarea id="c1"></textarea>
+      <label for="c2">O que você pensou?</label>
+      <textarea id="c2"></textarea>
+      <label for="c3">Como você se sentiu?</label>
+      <div class="chips" role="group" aria-label="Emoção principal" id="emoGrp"></div>
+      <label for="c4">Existe outra forma de enxergar a situação?</label>
+      <p class="hint" id="dica4">Dica: o que você diria a um amigo que pensasse isso?</p>
+      <textarea id="c4" aria-describedby="dica4"></textarea>
+      <div class="row">
+        <button class="btn" id="ditar" type="button" aria-pressed="false"><span aria-hidden="true">🎤</span> Ditar por voz <span class="estado" id="estDitar">Desligado</span></button>
+        <button class="btn primary" type="submit">Guardar carta</button>
+      </div>
+    </form>
+  </div>
+  <div class="card">
+    <h3>Cartas guardadas</h3>
+    <ul class="lista" id="listaCartas"></ul>
+    <p id="semCartas" class="hint">Nenhuma carta ainda.</p>
+  </div>
+</section>
+
+<section id="t-passos" data-tela hidden aria-labelledby="h-passos">
+  <h2 id="h-passos">Pequenos passos</h2>
+  <div class="card">
+    <h3 id="h-escolha">Escolha um passo para esta semana</h3>
+    <div class="chips" role="group" aria-labelledby="h-escolha" id="passosGrp"></div>
+    <div class="row"><button class="btn primary" id="salvaPasso" type="button">Combinar comigo</button></div>
+    <p id="passoAtual" role="status" aria-live="polite"></p>
+  </div>
+  <div class="card">
+    <h3>Esta semana</h3>
+    <div id="semana" class="row"></div>
+    <p class="hint">Marque os dias em que você fez o seu passo.</p>
+  </div>
+</section>
+
+<section id="t-termo" data-tela hidden aria-labelledby="h-termo">
+  <h2 id="h-termo">Termômetro</h2>
+  <div class="card">
+    <p>Nas últimas duas semanas, com que frequência você foi incomodado(a) por estes problemas?</p>
+    <p class="hint">Este é um rastreio simples e não faz diagnóstico. Converse com a equipe de saúde sobre o resultado.</p>
+    <form id="formTermo" novalidate>
+      <fieldset class="card" style="box-shadow:none"><legend><b>1. Pouco interesse ou prazer em fazer as coisas</b></legend>
+        <div class="scale" data-q="q1"></div></fieldset>
+      <fieldset class="card" style="box-shadow:none"><legend><b>2. Sentir-se para baixo, deprimido(a) ou sem esperança</b></legend>
+        <div class="scale" data-q="q2"></div></fieldset>
+      <div class="row"><button class="btn primary" type="submit">Ver devolutiva</button></div>
+    </form>
+    <div id="termoRes" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="t-apoio" data-tela hidden aria-labelledby="h-apoio">
+  <h2 id="h-apoio">Rede de apoio</h2>
+  <div class="card warn">
+    <p><b>Se você está em sofrimento intenso ou pensando em se machucar, procure ajuda agora.</b></p>
+    <div class="row">
+      <a class="btn primary" href="tel:188">Ligar 188 (CVV, 24 h)</a>
+      <a class="btn primary" href="tel:192">Ligar 192 (SAMU)</a>
+    </div>
+    <p class="hint">Procure também a unidade de saúde ou o CAPS mais próximo. Se estiver em perigo imediato, vá ao pronto-socorro.</p>
+  </div>
+  <div class="card">
+    <h3>Pessoas de confiança</h3>
+    <label for="nomeContato">Nome</label>
+    <input type="text" id="nomeContato" autocomplete="off">
+    <div class="row"><button class="btn" id="addContato" type="button">Adicionar</button></div>
+    <ul class="lista" id="listaContatos"></ul>
+  </div>
+  <div class="card">
+    <h3>Mensagem pronta</h3>
+    <p id="msgPronta"><em>“Oi, não estou bem hoje e queria conversar. Você pode falar comigo?”</em></p>
+    <div class="row">
+      <button class="btn" id="copiar" type="button">Copiar mensagem</button>
+      <a class="btn" id="zap" href="#" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section id="t-mural" data-tela hidden aria-labelledby="h-mural">
+  <h2 id="h-mural">Mural e feedback</h2>
+  <div class="card">
+    <p class="hint">Espaço público para trocar experiências sobre a Trilha do Cuidado, deixar sugestões ou escrever mensagens de acolhimento.</p>
+
+    <div id="muralAvisoLogin" class="card warn" style="margin:.6rem 0">
+      <p style="margin:0 0 .5rem"><b>Entre na sua conta para publicar no mural.</b> Você já pode ler os comentários abaixo.</p>
+      <button class="btn sm primary" id="btnMuralEntrar" type="button">Entrar ou criar conta</button>
+    </div>
+
+    <form id="formMural" hidden novalidate>
+      <label id="lblCatMural">Categoria</label>
+      <div class="chips" role="group" aria-labelledby="lblCatMural" id="muralCatGrp">
+        <button class="chip" type="button" data-mcat="Relato" aria-pressed="true">Relato</button>
+        <button class="chip" type="button" data-mcat="Sugestão" aria-pressed="false">Sugestão</button>
+        <button class="chip" type="button" data-mcat="Apoio" aria-pressed="false">Mensagem de apoio</button>
+        <button class="chip" type="button" data-mcat="Dúvida" aria-pressed="false">Dúvida</button>
+      </div>
+
+      <label for="muralTxt">Seu comentário ou feedback</label>
+      <textarea id="muralTxt" maxlength="500" placeholder="Escreva aqui sua experiência, sugestão ou palavra de apoio..."></textarea>
+      <p class="hint" id="muralCount">0 de 500 caracteres</p>
+
+      <label class="check-line">
+        <input type="checkbox" id="muralAnon">
+        <span>Publicar como Anônimo(a)</span>
+      </label>
+
+      <div class="row">
+        <button class="btn primary" type="submit">Publicar no mural</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Comentários recentes</h3>
+    <ul class="lista" id="listaMural"></ul>
+    <p id="semMural" class="hint">Carregando comentários...</p>
+  </div>
+</section>
+
+<section id="t-painel" data-tela hidden aria-labelledby="h-painel">
+  <h2 id="h-painel">Painel de acompanhamento</h2>
+  <div class="card">
+    <p class="hint">Resumo dos seus indicadores para acompanhar sua evolução ou compartilhar durante um atendimento.</p>
+    <button class="btn" id="autoriza" type="button" aria-pressed="true"><span aria-hidden="true">🔒</span> Exibir resumo de acompanhamento <span class="estado" id="estAut">Sim</span></button>
+  </div>
+  <div class="card">
+    <h3>Humor nos últimos 7 dias</h3>
+    <svg id="graf" viewBox="0 0 340 150" class="mapa" role="img" aria-label="Gráfico de humor"></svg>
+    <p id="grafTxt" class="hint"></p>
+  </div>
+  <div class="card">
+    <table>
+      <caption class="sr">Resumo de uso</caption>
+      <thead><tr><th scope="col">Indicador</th><th scope="col">Valor</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Dias com registro</th><td id="pDias">0</td></tr>
+        <tr><th scope="row">Humor médio</th><td id="pHumor">sem registros</td></tr>
+        <tr><th scope="row">Respirações concluídas</th><td id="pResp">0</td></tr>
+        <tr><th scope="row">Último rastreio</th><td id="pTermo">não feito</td></tr>
+        <tr><th scope="row">Cartas guardadas (conteúdo privado)</th><td id="pCartas">0</td></tr>
+      </tbody>
+    </table>
+    <div class="row"><button class="btn danger" id="apagar" type="button">Apagar meus dados</button></div>
+  </div>
+</section>
+
+<section id="t-ajustes" data-tela hidden aria-labelledby="h-aj">
+  <h2 id="h-aj">Acessibilidade</h2>
+  <div class="card">
+    <h3>Tamanho da letra</h3>
+    <div class="row">
+      <button class="btn" id="menos" type="button" aria-label="Diminuir letra">A−</button>
+      <button class="btn" id="mais" type="button" aria-label="Aumentar letra">A+</button>
+      <button class="btn" id="padrao" type="button">Padrão</button>
+    </div>
+    <p class="hint" id="txtFonte"></p>
+    <h3>Visual e conforto</h3>
+    <div class="row">
+      <button class="btn" id="bContraste" type="button" aria-pressed="false"><span aria-hidden="true">◐</span> Alto contraste <span class="estado">Desligado</span></button>
+      <button class="btn" id="bEsp" type="button" aria-pressed="false"><span aria-hidden="true">↔</span> Espaçamento do texto <span class="estado">Desligado</span></button>
+      <button class="btn" id="bMov" type="button" aria-pressed="false"><span aria-hidden="true">🌿</span> Reduzir animações <span class="estado">Desligado</span></button>
+    </div>
+    <h3>Som e voz</h3>
+    <div class="row">
+      <button class="btn" id="bVoz" type="button" aria-pressed="false"><span aria-hidden="true">🔊</span> Ler em voz alta <span class="estado">Desligado</span></button>
+      <button class="btn" id="bTeste" type="button">Testar voz</button>
+    </div>
+    <p class="hint" id="txtVoz"></p>
+    <details>
+      <summary>Atalhos de teclado</summary>
+      <p>Use Tab e Shift+Tab para navegar, Enter ou Espaço para ativar. Alt+1 a Alt+9 abrem as telas principais. Esc interrompe a leitura em voz alta.</p>
+    </details>
+  </div>
+</section>
+
+<section id="t-manual" data-tela hidden aria-labelledby="h-manual">
+  <h2 id="h-manual">Manual de uso</h2>
+  <div class="card prose">
+    <h3>Para que serve</h3>
+    <p>A Trilha do Cuidado ajuda você a cuidar de si no dia a dia com pequenas ações: registrar o humor, respirar com calma, escrever cartas de pensamento, combinar um passo possível, conferir como está e lembrar de quem pode apoiar. Ela não substitui consulta, diagnóstico nem tratamento.</p>
+    <h3>Como começar</h3>
+    <ol>
+      <li>Crie sua conta gratuita ou entre no topo da página para que seu progresso diário fique salvo.</li>
+      <li>Na tela <b>Hoje</b>, toque no rosto que combina com seu humor.</li>
+      <li>Conclua as missões do dia no seu ritmo. A cada novo dia, a trilha é renovada. Se o dia estiver pesado, ative <b>Hoje é dia de descanso</b> para preservar seu progresso.</li>
+    </ol>
+    <h3>As telas</h3>
+    <ul>
+      <li><b>Hoje</b>: humor, missões diárias, sementes, mapa do território e conquistas.</li>
+      <li><b>Respirar</b>: exercício guiado com ritmo de 4 ou 6 segundos, texto, voz e vibração.</li>
+      <li><b>Cartas</b>: registro privado em quatro etapas para organizar pensamentos, com opção de ditado por voz.</li>
+      <li><b>Passos</b>: escolha de um pequeno passo e acompanhamento semanal.</li>
+      <li><b>Termômetro</b>: duas perguntas de rastreio emocional. Não é diagnóstico.</li>
+      <li><b>Apoio</b>: contatos de confiança e mensagem pronta para pedir ajuda.</li>
+      <li><b>Mural</b>: espaço público para relatos, sugestões e feedback sobre a ferramenta.</li>
+      <li><b>Painel</b>: resumo da sua evolução para acompanhamento pessoal ou clínico.</li>
+      <li><b>Manual</b>, <b>Acesso</b> e <b>Sobre</b>: orientações, ajustes de acessibilidade e informações do projeto.</li>
+    </ul>
+    <h3>Instalar no celular</h3>
+    <p>No Chrome ou Edge, use o botão <b>Instalar aplicativo</b> na tela Sobre, quando disponível, ou o menu do navegador em “Adicionar à tela inicial”.</p>
+    <h3>Seus dados</h3>
+    <p>Com a conta conectada, seus registros ficam vinculados ao seu usuário. Você também pode baixar uma cópia em arquivo ou imprimir um resumo na tela <b>Sobre</b>.</p>
+    <h3>Em caso de urgência</h3>
+    <p>Ligue 188 (CVV, 24 horas), 192 (SAMU) ou procure o CAPS ou a Unidade Básica de Saúde mais próxima.</p>
+  </div>
+</section>
+
+<section id="t-sobre" data-tela hidden aria-labelledby="h-sobre">
+  <h2 id="h-sobre">Sobre a Trilha do Cuidado</h2>
+  <div class="card prose">
+    <p>Tecnologia educacional e de apoio ao autocuidado, componente do Programa Cuidar em Rede, desenvolvida na disciplina de Psicologia da Saúde do curso de Psicologia do Centro Universitário Alves Faria.</p>
+    <table><tbody>
+      <tr><th scope="row">Versão</th><td class="ver">1.0.0 · 2026</td></tr>
+      <tr><th scope="row">Autora</th><td>Débora Santos</td></tr>
+      <tr><th scope="row">Coautora</th><td>Suely Pereira de Faria</td></tr>
+      <tr><th scope="row">Instituição</th><td>Centro Universitário Alves Faria</td></tr>
+      <tr><th scope="row">Licença de uso</th><td>Uso gratuito, para fins educacionais e de promoção da saúde</td></tr>
+    </tbody></table>
+    <h3>Aviso importante</h3>
+    <p>A Trilha do Cuidado é uma ferramenta de apoio ao autocuidado. Não realiza diagnóstico, não substitui atendimento profissional e não é serviço de emergência. O Termômetro é apenas um rastreio breve.</p>
+  </div>
+  <div class="card noprint">
+    <h3>Cópia e impressão</h3>
+    <div class="row">
+      <button class="btn" id="bExp" type="button">Exportar cópia</button>
+      <label class="btn" for="fImp" style="margin:0;cursor:pointer">Importar cópia</label>
+      <button class="btn" id="bPrint" type="button">Imprimir resumo</button>
+    </div>
+    <input type="file" id="fImp" accept="application/json,.json" class="sr">
+    <div class="row"><button class="btn primary" id="bInst" type="button" hidden>Instalar aplicativo</button></div>
+    <p class="hint" id="txtPwa"></p>
+  </div>
+  <div class="card prose">
+    <h3>Acessibilidade</h3>
+    <p>Desenvolvido conforme as diretrizes WCAG 2.2 (nível AA), eMAG e Lei Brasileira de Inclusão (Lei nº 13.146/2015), com navegação por teclado, leitura em voz alta, ditado por voz, alto contraste, ajuste de fonte e espaçamento de texto.</p>
+    <h3>Privacidade e proteção de dados (LGPD)</h3>
+    <p>Os registros pessoais (humor, missões, cartas e contatos) são privados e vinculados exclusivamente à sua conta de acesso. Apenas as mensagens enviadas voluntariamente na aba <b>Mural</b> são exibidas publicamente, podendo ser publicadas de forma anônima. Você pode apagar seus registros a qualquer momento na aba <b>Painel</b>, em conformidade com a Lei nº 13.709/2018.</p>
+  </div>
+</section>
+
+<footer class="rod">
+  <p>Trilha do Cuidado · Débora Santos e Suely Pereira de Faria · Centro Universitário Alves Faria, 2026. Não substitui atendimento profissional e não é serviço de emergência.</p>
+</footer>
+</main>
+</div>
+
+<nav class="tabs" aria-label="Telas do aplicativo">
+  <ul id="tabs"></ul>
+</nav>
+<canvas id="confete" class="confete" aria-hidden="true"></canvas>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+(function(){
+"use strict";
+
+var FIREBASE_CONFIG = {
+  apiKey: "COLE_SUA_API_KEY_AQUI",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  projectId: "SEU_PROJETO",
+  storageBucket: "SEU_PROJETO.appspot.com",
+  messagingSenderId: "000000000000",
+  appId: "1:000000000000:web:000000000000"
+};
+
+var firebaseAtivo = !!(window.firebase && FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf("COLE_SUA") === -1);
+var auth = null, db = null, usuarioAtual = null, unsubMural = null;
+
+if(firebaseAtivo){
+  firebase.initializeApp(FIREBASE_CONFIG);
+  auth = firebase.auth();
+  db = firebase.firestore();
+}
+
+var KEY = "trilha-cuidado-v2";
+var VAZIO = {
+  humor:{},med:{},mex:{},resp:{},cartas:[],passo:"",semana:{},descanso:{},
+  termo:null,contatos:[],fonte:100,contraste:false,mov:false,esp:false,
+  voz:false,vib:true,aut:true,sementes:0,ritmo:4,respTotal:0
+};
+var d = JSON.parse(JSON.stringify(VAZIO));
+
+function $(s){return document.querySelector(s)}
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+function hoje(){
+  var t = new Date();
+  return t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);
+}
+function dia(offset){
+  var t = new Date();
+  t.setDate(t.getDate()+offset);
+  return t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);
+}
+function esc(s){
+  return String(s).replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+
+function loadLocal(){
+  try{
+    var s = localStorage.getItem(KEY);
+    if(s) d = Object.assign(JSON.parse(JSON.stringify(VAZIO)), JSON.parse(s));
+  }catch(e){}
+}
+
+var saveTimer = null;
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
+  if(firebaseAtivo && db && usuarioAtual){
+    var st = $("#syncStatus");
+    if(st) st.textContent = "Salvando na nuvem...";
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){
+      db.collection("usuarios").doc(usuarioAtual.uid).set({
+        nome: usuarioAtual.displayName || "",
+        email: usuarioAtual.email || "",
+        atualizadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+        dados: d
+      }, {merge:true}).then(function(){
+        if(st) st.textContent = "Progresso diário sincronizado na sua conta.";
+      }).catch(function(){
+        if(st) st.textContent = "Salvo no aparelho (aguardando conexão para sincronizar).";
+      });
+    }, 400);
+  }
+}
+
+loadLocal();
+
+/* Voz, notificações e vibração */
+var temVoz = ("speechSynthesis" in window);
+function falar(t){
+  if(!d.voz || !temVoz) return;
+  try{
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(t);
+    u.lang = "pt-BR";
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+var toastT = null;
+function aviso(t, lerEmVoz){
+  var el = $("#toast");
+  el.textContent = t;
+  el.classList.add("show");
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ el.classList.remove("show"); }, 2800);
+  var s = $("#voz-status");
+  s.textContent = "";
+  setTimeout(function(){ s.textContent = t; }, 60);
+  if(lerEmVoz !== false) falar(t);
+}
+function vibrar(p){
+  if(d.vib && navigator.vibrate){ try{ navigator.vibrate(p); }catch(e){} }
+}
+function setEstado(btn, on, txtOn, txtOff){
+  if(!btn) return;
+  btn.setAttribute("aria-pressed", on ? "true" : "false");
+  var e = btn.querySelector(".estado");
+  if(e) e.textContent = on ? txtOn : txtOff;
+}
+
+/* Ajustes de acessibilidade */
+function aplicar(){
+  document.documentElement.style.fontSize = d.fonte + "%";
+  document.body.classList.toggle("contraste", !!d.contraste);
+  document.body.classList.toggle("menos-mov", !!d.mov);
+  document.body.classList.toggle("espaco", !!d.esp);
+  setEstado($("#bEsp"), d.esp, "Ligado", "Desligado");
+  setEstado($("#bContraste"), d.contraste, "Ligado", "Desligado");
+  setEstado($("#bMov"), d.mov, "Ligado", "Desligado");
+  setEstado($("#bVoz"), d.voz, "Ligado", "Desligado");
+  setEstado($("#vibBtn"), d.vib, "Ligada", "Desligada");
+  setEstado($("#autoriza"), d.aut, "Sim", "Não");
+  $("#txtFonte").textContent = "Tamanho atual: " + d.fonte + "%.";
+  $("#txtVoz").textContent = temVoz
+    ? "A leitura usa a voz do seu aparelho em português."
+    : "Seu navegador não oferece leitura em voz alta. O aplicativo continua funcionando normalmente.";
+}
+if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches && !localStorage.getItem(KEY)){
+  d.mov = true;
+}
+
+/* Autenticação e sincronização */
+function atualizaUIAuth(){
+  var logado = !!usuarioAtual;
+  $("#userBar").hidden = !logado;
+  $("#authCard").hidden = logado;
+  $("#authAvisoReabrir").hidden = true;
+  $("#formMural").hidden = !logado;
+  $("#muralAvisoLogin").hidden = logado;
+
+  if(logado){
+    var nome = usuarioAtual.displayName || (usuarioAtual.email ? usuarioAtual.email.split("@")[0] : "Participante");
+    $("#userNome").textContent = "Olá, " + nome + "!";
+  }else if(!firebaseAtivo){
+    $("#authMsg").textContent = "Configure as chaves do Firebase no código para ativar o login na nuvem.";
+  }
+}
+
+function traduzErroAuth(code){
+  var mapa = {
+    "auth/invalid-email": "Digite um endereço de e-mail válido.",
+    "auth/user-not-found": "Nenhuma conta encontrada com este e-mail.",
+    "auth/wrong-password": "Senha incorreta. Tente novamente.",
+    "auth/invalid-credential": "E-mail ou senha incorretos.",
+    "auth/email-already-in-use": "Este e-mail já está cadastrado. Use a aba Entrar.",
+    "auth/weak-password": "A senha precisa ter pelo menos 6 caracteres.",
+    "auth/too-many-requests": "Muitas tentativas seguidas. Aguarde alguns instantes."
+  };
+  return mapa[code] || "Não foi possível concluir o acesso. Verifique seus dados.";
+}
+
+if(firebaseAtivo){
+  auth.onAuthStateChanged(function(user){
+    usuarioAtual = user || null;
+    atualizaUIAuth();
+    if(user && db){
+      $("#syncStatus").textContent = "Carregando seus dados...";
+      db.collection("usuarios").doc(user.uid).get().then(function(doc){
+        if(doc.exists && doc.data() && doc.data().dados){
+          d = Object.assign(JSON.parse(JSON.stringify(VAZIO)), doc.data().dados);
+          try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
+          aplicar(); montaPassos(); montaHumor(); contatos(); atualizar(); painel(); listaCartas(); semana();
+          $("#syncStatus").textContent = "Progresso diário sincronizado na sua conta.";
+        }else{
+          save();
+        }
+      }).catch(function(){
+        $("#syncStatus").textContent = "Modo offline ativo. Sincronizará ao reconectar.";
+      });
+    }
+  });
+}else{
+  atualizaUIAuth();
+}
+
+$("#tabLogin").addEventListener("click", function(){
+  $("#tabLogin").setAttribute("aria-pressed", "true");
+  $("#tabCad").setAttribute("aria-pressed", "false");
+  $("#formLogin").hidden = false;
+  $("#formCadastro").hidden = true;
+  $("#authMsg").textContent = "";
+});
+
+$("#tabCad").addEventListener("click", function(){
+  $("#tabCad").setAttribute("aria-pressed", "true");
+  $("#tabLogin").setAttribute("aria-pressed", "false");
+  $("#formCadastro").hidden = false;
+  $("#formLogin").hidden = true;
+  $("#authMsg").textContent = "";
+});
+
+$("#btnOcultarAuth").addEventListener("click", function(){
+  $("#authCard").hidden = true;
+  $("#authAvisoReabrir").hidden = false;
+});
+
+$("#btnAbrirAuth").addEventListener("click", function(){
+  $("#authCard").hidden = false;
+  $("#authAvisoReabrir").hidden = true;
+  $("#loginEmail").focus();
+});
+
+$("#btnMuralEntrar").addEventListener("click", function(){
+  $("#authCard").hidden = false;
+  $("#authAvisoReabrir").hidden = true;
+  window.scrollTo(0, 0);
+  $("#loginEmail").focus();
+});
+
+$("#formLogin").addEventListener("submit", function(e){
+  e.preventDefault();
+  if(!firebaseAtivo){ aviso("Configure o Firebase para ativar o login."); return; }
+  var email = $("#loginEmail").value.trim();
+  var senha = $("#loginSenha").value;
+  if(!email || !senha){ $("#authMsg").textContent = "Preencha e-mail e senha."; return; }
+  $("#authMsg").textContent = "Entrando...";
+  auth.signInWithEmailAndPassword(email, senha).then(function(){
+    $("#authMsg").textContent = "";
+    $("#formLogin").reset();
+    aviso("Bem-vindo(a) de volta à Trilha do Cuidado!");
+  }).catch(function(err){
+    $("#authMsg").textContent = traduzErroAuth(err.code);
+  });
+});
+
+$("#formCadastro").addEventListener("submit", function(e){
+  e.preventDefault();
+  if(!firebaseAtivo){ aviso("Configure o Firebase para ativar o cadastro."); return; }
+  var nome = $("#cadNome").value.trim();
+  var email = $("#cadEmail").value.trim();
+  var senha = $("#cadSenha").value;
+  if(!nome || !email || senha.length < 6){
+    $("#authMsg").textContent = "Preencha seu nome, e-mail e uma senha com 6 ou mais caracteres.";
+    return;
+  }
+  $("#authMsg").textContent = "Criando conta...";
+  auth.createUserWithEmailAndPassword(email, senha).then(function(cred){
+    return cred.user.updateProfile({ displayName: nome }).then(function(){
+      usuarioAtual = cred.user;
+      atualizaUIAuth();
+      save();
+      $("#authMsg").textContent = "";
+      $("#formCadastro").reset();
+      aviso("Conta criada com sucesso! Sua trilha diária está ativa.");
+    });
+  }).catch(function(err){
+    $("#authMsg").textContent = traduzErroAuth(err.code);
+  });
+});
+
+$("#btnEsqueci").addEventListener("click", function(){
+  if(!firebaseAtivo){ aviso("Configure o Firebase primeiro."); return; }
+  var email = $("#loginEmail").value.trim();
+  if(!email){
+    $("#authMsg").textContent = "Digite seu e-mail no campo acima para receber o link de redefinição.";
+    $("#loginEmail").focus();
+    return;
+  }
+  auth.sendPasswordResetEmail(email).then(function(){
+    $("#authMsg").textContent = "Enviamos um e-mail para redefinir sua senha.";
+  }).catch(function(err){
+    $("#authMsg").textContent = traduzErroAuth(err.code);
+  });
+});
+
+$("#btnSair").addEventListener("click", function(){
+  if(!firebaseAtivo || !auth) return;
+  auth.signOut().then(function(){
+    d = JSON.parse(JSON.stringify(VAZIO));
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    aplicar(); montaPassos(); montaHumor(); contatos(); atualizar(); painel(); listaCartas(); semana();
+    aviso("Você saiu da sua conta.");
+  });
+});
+
+/* Navegação entre abas */
+var TELAS = [
+  ["hoje","Hoje","🏡"],
+  ["respira","Respirar","🌬️"],
+  ["carta","Cartas","✉️"],
+  ["passos","Passos","👣"],
+  ["termo","Termômetro","🌡️"],
+  ["apoio","Apoio","🤝"],
+  ["mural","Mural","💬"],
+  ["painel","Painel","📊"],
+  ["manual","Manual","📖"],
+  ["ajustes","Acesso","♿"],
+  ["sobre","Sobre","ℹ️"]
+];
+
+function montaTabs(){
+  var h = "";
+  TELAS.forEach(function(t, i){
+    h += '<li><button class="tab" type="button" data-ir="'+t[0]+'" aria-label="'+t[1]+'" '+(i===0?'aria-current="page"':'')+'><span class="i" aria-hidden="true">'+t[2]+'</span><span>'+t[1]+'</span></button></li>';
+  });
+  $("#tabs").innerHTML = h;
+}
+
+function ir(id, foco){
+  $$("[data-tela]").forEach(function(s){ s.hidden = (s.id !== "t-"+id); });
+  $$(".tab").forEach(function(b){
+    if(b.dataset.ir === id) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
+  });
+  if(id === "painel") painel();
+  if(id === "carta") listaCartas();
+  if(id === "passos") semana();
+  if(id === "apoio") contatos();
+  if(id === "mural") iniciaMural();
+  window.scrollTo(0, 0);
+  var h = $("#t-"+id+" h2");
+  if(h && foco !== false){ h.setAttribute("tabindex", "-1"); h.focus({preventScroll:true}); }
+  var nome = "";
+  TELAS.forEach(function(t){ if(t[0] === id) nome = t[1]; });
+  document.title = nome + " · Trilha do Cuidado";
+  if(location.hash !== "#/"+id){ try{ history.replaceState(null, "", "#/"+id); }catch(e){} }
+  aviso("Tela " + nome + ".");
+}
+
+/* Tela Hoje (Trilha diária) */
+var HUMORES = [["1","😞","Muito mal"],["2","🙁","Mal"],["3","😐","Mais ou menos"],["4","🙂","Bem"],["5","😄","Muito bem"]];
+function montaHumor(){
+  var h = "";
+  HUMORES.forEach(function(x){
+    h += '<button class="btn" type="button" data-hum="'+x[0]+'" aria-pressed="false"><span class="face" aria-hidden="true">'+x[1]+'</span><span>'+x[2]+'</span></button>';
+  });
+  $("#humorGrp").innerHTML = h;
+  marcaHumor();
+}
+function marcaHumor(){
+  $$("#humorGrp .btn").forEach(function(b){
+    b.setAttribute("aria-pressed", d.humor[hoje()] === b.dataset.hum ? "true" : "false");
+  });
+}
+
+var MISSOES = [
+  {id:"humor",ico:"💬",t:"Registrar o humor",s:"Toque em uma carinha acima",auto:true},
+  {id:"med",ico:"💊",t:"Cuidar do remédio",s:"Tomei o remédio de hoje",toggle:true},
+  {id:"mex",ico:"🚶",t:"Me movimentar",s:"Uma caminhada leve já conta",toggle:true},
+  {id:"resp",ico:"🌬️",t:"Respirar com calma",s:"Faça um exercício na aba Respirar",auto:true},
+  {id:"passo",ico:"👣",t:"Fazer meu pequeno passo",s:"Combine um passo na aba Passos",toggle:true}
+];
+
+function feita(id){
+  if(id === "humor") return !!d.humor[hoje()];
+  if(id === "resp") return !!d.resp[hoje()];
+  if(id === "passo") return !!d.semana[hoje()];
+  return !!d[id][hoje()];
+}
+
+function montaMissoes(){
+  var h = "";
+  MISSOES.forEach(function(m){
+    var f = feita(m.id);
+    h += '<div class="mission'+(f?' feita':'')+'"><span class="ico" aria-hidden="true">'+m.ico+'</span><div class="txt"><b>'+m.t+'</b><small>'+(f?'Concluída hoje':m.s)+'</small></div>';
+    if(m.toggle) h += '<button class="btn'+(f?' on':'')+'" type="button" data-miss="'+m.id+'" aria-pressed="'+f+'">'+(f?'Feito ✓':'Marcar')+'</button>';
+    else h += '<span class="btn'+(f?' on':'')+'" style="pointer-events:none">'+(f?'Feito ✓':'Pendente')+'</span>';
+    h += '</div>';
+  });
+  $("#missoes").innerHTML = h;
+}
+
+function calc(){
+  var n = 0;
+  MISSOES.forEach(function(m){ if(feita(m.id)) n++; });
+  var k = new Set([].concat(
+    Object.keys(d.humor), Object.keys(d.med), Object.keys(d.mex),
+    Object.keys(d.resp), Object.keys(d.semana), Object.keys(d.descanso)
+  ));
+  return {n:n, dias:k.size};
+}
+
+var anteriorN = null;
+function atualizar(){
+  var dataFormatada = hoje().split("-").reverse().join("/");
+  $("#dataHojeTxt").textContent = "Data de hoje: " + dataFormatada;
+  montaMissoes();
+  marcaHumor();
+  var c = calc();
+  $("#barraI").style.width = (c.n/5*100) + "%";
+  $("#barra").setAttribute("aria-valuenow", Math.round(c.n/5*100));
+  $("#txtProg").textContent = c.n + " de 5 missões concluídas hoje.";
+  $("#sDias").textContent = c.dias;
+  var sem = d.sementes;
+  $("#sSemente").textContent = sem;
+  var nivel = 1 + Math.floor(sem/10);
+  $("#sNivel").textContent = nivel;
+  setEstado($("#btnDescanso"), !!d.descanso[hoje()], "Sim", "Não");
+  mapa(sem);
+  badges(c);
+  if(anteriorN !== null && c.n === 5 && anteriorN < 5){
+    confete();
+    aviso("Todas as missões de hoje concluídas! Seu território floresceu.");
+  }
+  anteriorN = c.n;
+}
+
+function semente(qtd){ d.sementes += qtd; }
+
+function mapa(sem){
+  var arv = Math.min(8, Math.floor(sem/3));
+  var s = '<defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#bfe5f2"/><stop offset="1" stop-color="#eaf7ee"/></linearGradient></defs>'+
+  '<rect width="400" height="190" fill="url(#g1)"/><circle cx="340" cy="38" r="20" fill="#f2b84b"/>'+
+  '<path d="M0 150 Q100 110 200 140 T400 130 L400 190 L0 190Z" fill="#7bc29a"/><path d="M0 170 Q120 140 240 165 T400 160 L400 190 L0 190Z" fill="#4fa57b"/>'+
+  '<path d="M30 185 C120 150, 180 175, 260 140 S 360 150, 385 118" stroke="#f6e3b0" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="2 12"/>';
+  var pos = [[40,140],[95,150],[150,135],[210,150],[265,128],[315,140],[360,120],[120,170]];
+  for(var i=0; i<arv; i++){
+    var p = pos[i];
+    s += '<rect x="'+(p[0]-2)+'" y="'+p[1]+'" width="4" height="12" fill="#6b4a2b"/><circle cx="'+p[0]+'" cy="'+(p[1]-4)+'" r="11" fill="#2e8b57"/><circle cx="'+(p[0]-5)+'" cy="'+(p[1]-1)+'" r="7" fill="#3da56a"/>';
+  }
+  if(arv === 0) s += '<text x="200" y="100" text-anchor="middle" font-size="16" fill="#2a4a40">Plante sua primeira árvore: conclua missões</text>';
+  $("#mapa").innerHTML = s;
+  $("#mapa").setAttribute("aria-label", "Mapa do território com " + arv + " árvores");
+  $("#txtMapa").textContent = arv + " de 8 árvores plantadas. Cada 3 sementes plantam uma árvore.";
+}
+
+function badges(c){
+  var lista = [
+    ["Primeiro passo", c.dias >= 1],
+    ["Respirei fundo", Object.keys(d.resp).length >= 1],
+    ["Escrevi minha carta", d.cartas.length >= 1],
+    ["3 dias de cuidado", c.dias >= 3],
+    ["Fiz o rastreio", !!d.termo],
+    ["Tenho apoio", d.contatos.length >= 1]
+  ];
+  var h = "";
+  lista.forEach(function(b){
+    h += '<li class="badge'+(b[1]?' ganha':'')+'">'+(b[1]?'✓ ':'')+b[0]+(b[1]?' (conquistada)':' (a conquistar)')+'</li>';
+  });
+  $("#badges").innerHTML = h;
+}
+
+/* Tela Respirar */
+var rodando = false, timer = null;
+function paraResp(msg){
+  rodando = false;
+  clearTimeout(timer);
+  $("#respBtn").textContent = "Começar";
+  $("#circ").textContent = "Pronto";
+  $("#circ").classList.remove("cheio");
+  $("#respTxt").textContent = msg || "Toque em Começar.";
+}
+function iniciaResp(){
+  rodando = true;
+  $("#respBtn").textContent = "Parar";
+  var ciclo = 0, insp = true, seg = d.ritmo * 1000;
+  $("#circ").style.transitionDuration = d.ritmo + "s";
+  (function passo(){
+    if(!rodando) return;
+    if(ciclo >= 4){
+      paraResp("Exercício concluído. Bom trabalho!");
+      if(!d.resp[hoje()]){ d.resp[hoje()] = 1; semente(1); }
+      d.respTotal = (d.respTotal || 0) + 1;
+      save(); atualizar(); vibrar([80,60,80]);
+      falar("Exercício concluído. Bom trabalho.");
+      return;
+    }
+    $("#circ").textContent = insp ? "Inspire" : "Solte";
+    $("#circ").classList.toggle("cheio", insp);
+    $("#respTxt").textContent = (insp ? "Inspire devagar pelo nariz" : "Solte o ar devagar pela boca") + ". Ciclo " + (ciclo+1) + " de 4.";
+    vibrar(insp ? [200] : [60]);
+    falar(insp ? "Inspire" : "Solte o ar");
+    timer = setTimeout(function(){ if(!insp) ciclo++; insp = !insp; passo(); }, seg);
+  })();
+}
+
+/* Tela Cartas */
+var EMO = ["Tristeza","Ansiedade","Raiva","Culpa","Medo","Cansaço","Calma","Alegria"];
+var emoSel = "";
+function montaEmo(){
+  var h = "";
+  EMO.forEach(function(e){
+    h += '<button class="chip" type="button" data-emo="'+e+'" aria-pressed="false">'+e+'</button>';
+  });
+  $("#emoGrp").innerHTML = h;
+}
+function listaCartas(){
+  var ul = $("#listaCartas"), h = "";
+  d.cartas.slice().reverse().forEach(function(c, i){
+    var idx = d.cartas.length - 1 - i;
+    h += '<li><b>'+esc(c.data)+(c.emo?' · '+esc(c.emo):'')+'</b><br>'+
+      (c.c1?'<small>Aconteceu:</small> '+esc(c.c1)+'<br>':'')+
+      (c.c2?'<small>Pensei:</small> '+esc(c.c2)+'<br>':'')+
+      (c.c4?'<small>Outro olhar:</small> '+esc(c.c4)+'<br>':'')+
+      '<button class="btn danger sm" type="button" data-delcarta="'+idx+'" style="margin-top:.5rem">Apagar carta</button></li>';
+  });
+  ul.innerHTML = h;
+  $("#semCartas").hidden = d.cartas.length > 0;
+}
+
+var rec = null;
+function ditar(on){
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var b = $("#ditar");
+  if(!SR){
+    aviso("Seu navegador não oferece ditado por voz. Você pode escrever normalmente.");
+    setEstado(b, false, "Ligado", "Desligado");
+    return;
+  }
+  if(!on){
+    if(rec){ try{ rec.stop(); }catch(e){} }
+    setEstado(b, false, "Ligado", "Desligado");
+    return;
+  }
+  try{
+    rec = new SR();
+    rec.lang = "pt-BR";
+    rec.interimResults = false;
+    rec.continuous = false;
+    var alvo = document.activeElement && document.activeElement.tagName === "TEXTAREA" ? document.activeElement : $("#c1");
+    rec.onresult = function(e){
+      var t = e.results[0][0].transcript;
+      alvo.value = (alvo.value ? alvo.value + " " : "") + t;
+    };
+    rec.onend = function(){ setEstado(b, false, "Ligado", "Desligado"); };
+    rec.onerror = function(){
+      aviso("Não consegui ouvir. Tente de novo ou escreva.");
+      setEstado(b, false, "Ligado", "Desligado");
+    };
+    rec.start();
+    setEstado(b, true, "Ouvindo", "Desligado");
+    aviso("Pode falar.");
+  }catch(e){
+    aviso("Não foi possível iniciar o ditado.");
+    setEstado(b, false, "Ligado", "Desligado");
+  }
+}
+
+/* Tela Passos */
+var PASSOS = [
+  "Caminhar dez minutos",
+  "Ligar para alguém de confiança",
+  "Fazer algo de que gosto por quinze minutos",
+  "Dormir no mesmo horário",
+  "Beber água ao longo do dia",
+  "Alongar o corpo"
+];
+var passoSel = "";
+function montaPassos(){
+  var h = "";
+  PASSOS.forEach(function(p){
+    h += '<button class="chip" type="button" data-passo="'+esc(p)+'" aria-pressed="'+(d.passo===p)+'">'+esc(p)+'</button>';
+  });
+  $("#passosGrp").innerHTML = h;
+  passoSel = d.passo;
+  $("#passoAtual").textContent = d.passo ? "Combinado: " + d.passo + "." : "Nenhum passo combinado ainda.";
+}
+function semana(){
+  var h = "", nomes = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+  for(var i=-6; i<=0; i++){
+    var k = dia(i), t = new Date();
+    t.setDate(t.getDate()+i);
+    var f = !!d.semana[k];
+    h += '<button class="btn'+(f?' on':'')+'" type="button" data-sem="'+k+'" aria-pressed="'+f+'" aria-label="'+nomes[t.getDay()]+' dia '+t.getDate()+(f?', feito':', não feito')+'">'+nomes[t.getDay()]+' '+t.getDate()+(f?' ✓':'')+'</button>';
+  }
+  $("#semana").innerHTML = h;
+}
+
+/* Tela Termômetro */
+var OPC = [["0","Nunca"],["1","Alguns dias"],["2","Mais da metade"],["3","Quase todo dia"]];
+function montaTermo(){
+  $$("#formTermo .scale").forEach(function(sc){
+    var q = sc.dataset.q, h = "";
+    OPC.forEach(function(o){
+      h += '<button class="chip" type="button" data-q="'+q+'" data-v="'+o[0]+'" aria-pressed="false">'+o[1]+'</button>';
+    });
+    sc.innerHTML = h;
+  });
+}
+var resp = {q1:null, q2:null};
+
+/* Tela Apoio */
+function contatos(){
+  var h = "";
+  d.contatos.forEach(function(c, i){
+    h += '<li>'+esc(c)+' <button class="btn danger sm" type="button" data-delcont="'+i+'" style="margin-left:.5rem" aria-label="Remover '+esc(c)+'">Remover</button></li>';
+  });
+  $("#listaContatos").innerHTML = h || '<li class="hint">Nenhuma pessoa adicionada ainda.</li>';
+}
+function atualizaZap(){
+  var msg = $("#msgPronta").textContent.replace(/[“”]/g,"").trim();
+  $("#zap").setAttribute("href", "https://wa.me/?text=" + encodeURIComponent(msg));
+}
+
+/* Tela Mural (Comentários públicos / Feedback) */
+var muralCatSel = "Relato";
+$("#muralTxt").addEventListener("input", function(){
+  $("#muralCount").textContent = this.value.length + " de 500 caracteres";
+});
+
+function iniciaMural(){
+  if(!firebaseAtivo || !db){
+    $("#semMural").textContent = "Conecte o Firebase para carregar e publicar comentários públicos.";
+    return;
+  }
+  if(unsubMural) return;
+  unsubMural = db.collection("comentarios")
+    .orderBy("criadoEm", "desc")
+    .limit(50)
+    .onSnapshot(function(snap){
+      var h = "";
+      snap.forEach(function(doc){
+        var c = doc.data();
+        var dataStr = "";
+        if(c.criadoEm && c.criadoEm.toDate){
+          var dt = c.criadoEm.toDate();
+          dataStr = ("0"+dt.getDate()).slice(-2)+"/"+("0"+(dt.getMonth()+1)).slice(-2)+"/"+dt.getFullYear()+
+            " às "+("0"+dt.getHours()).slice(-2)+":"+("0"+dt.getMinutes()).slice(-2);
+        }
+        var proprio = usuarioAtual && c.uid === usuarioAtual.uid;
+        h += '<li><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.3rem">'+
+          '<div><b>'+esc(c.autor || "Participante")+'</b><span class="tag-cat">'+esc(c.categoria || "Relato")+'</span></div>'+
+          '<small>'+esc(dataStr)+'</small></div>'+
+          '<p style="margin:.45rem 0 0">'+esc(c.texto || "")+'</p>'+
+          (proprio ? '<button class="btn danger sm" type="button" data-delmural="'+esc(doc.id)+'" style="margin-top:.5rem">Excluir meu comentário</button>' : '')+
+          '</li>';
+      });
+      $("#listaMural").innerHTML = h;
+      $("#semMural").hidden = !snap.empty;
+      if(snap.empty) $("#semMural").textContent = "Ainda não há comentários. Seja a primeira pessoa a deixar uma mensagem!";
+    }, function(){
+      $("#semMural").textContent = "Não foi possível carregar os comentários no momento.";
+    });
+}
+
+/* Tela Painel */
+function painel(){
+  var ks = Object.keys(d.humor);
+  $("#pDias").textContent = d.aut ? calc().dias : "oculto";
+  if(!d.aut){
+    ["#pHumor","#pResp","#pTermo","#pCartas"].forEach(function(s){ $(s).textContent = "oculto"; });
+    $("#graf").innerHTML = "";
+    $("#grafTxt").textContent = "Exibição desativada.";
+    return;
+  }
+  if(ks.length){
+    var s = 0;
+    ks.forEach(function(k){ s += +d.humor[k]; });
+    $("#pHumor").textContent = (s/ks.length).toFixed(1).replace(".",",") + " de 5";
+  }else{
+    $("#pHumor").textContent = "sem registros";
+  }
+  $("#pResp").textContent = d.respTotal || 0;
+  $("#pTermo").textContent = d.termo ? d.termo.texto + " (" + d.termo.data + ")" : "não feito";
+  $("#pCartas").textContent = d.cartas.length;
+
+  var g = '<line x1="30" y1="120" x2="330" y2="120" stroke="currentColor" opacity=".4"/>', pts = [], tx = [];
+  for(var i=-6; i<=0; i++){
+    var k = dia(i), x = 40 + (i+6)*47, v = d.humor[k];
+    g += '<text x="'+x+'" y="142" text-anchor="middle" font-size="11" fill="currentColor">'+k.slice(8)+'</text>';
+    if(v){
+      var y = 120 - (+v)*20;
+      pts.push(x+","+y);
+      g += '<circle cx="'+x+'" cy="'+y+'" r="6" fill="#1d7a5c" stroke="#fff" stroke-width="2"/>';
+      tx.push(k.slice(8)+"/"+k.slice(5,7)+": "+v);
+    }
+  }
+  if(pts.length > 1) g = '<polyline points="'+pts.join(" ")+'" fill="none" stroke="#1d7a5c" stroke-width="3"/>' + g;
+  $("#graf").innerHTML = g;
+  $("#graf").setAttribute("aria-label", "Gráfico de humor dos últimos 7 dias");
+  $("#grafTxt").textContent = tx.length ? "Registros (1 a 5): " + tx.join("; ") + "." : "Sem registros nos últimos 7 dias.";
+}
+
+function confete(){
+  if(d.mov) return;
+  var c = $("#confete"), x = c.getContext("2d");
+  c.width = innerWidth;
+  c.height = innerHeight;
+  var p = [];
+  for(var i=0; i<80; i++){
+    p.push({x:Math.random()*c.width, y:-20-Math.random()*200, v:2+Math.random()*3, r:3+Math.random()*4, c:["#f2b84b","#1d7a5c","#e86a5e","#5aa9e6"][i%4]});
+  }
+  var f = 0;
+  (function loop(){
+    x.clearRect(0,0,c.width,c.height);
+    p.forEach(function(q){
+      q.y += q.v;
+      q.x += Math.sin(q.y/20);
+      x.fillStyle = q.c;
+      x.fillRect(q.x, q.y, q.r, q.r*1.6);
+    });
+    f++;
+    if(f < 120) requestAnimationFrame(loop);
+    else x.clearRect(0,0,c.width,c.height);
+  })();
+}
+
+/* Interações gerais */
+document.addEventListener("click", function(e){
+  var t = e.target.closest("button,a");
+  if(!t) return;
+  if(t.dataset.ir){ ir(t.dataset.ir); return; }
+  if(t.dataset.hum){
+    d.humor[hoje()] = t.dataset.hum;
+    semente(1); save(); atualizar();
+    aviso("Humor registrado: " + t.textContent.trim() + ".");
+    return;
+  }
+  if(t.dataset.miss){
+    var id = t.dataset.miss;
+    if(id === "passo"){
+      if(!d.passo){ aviso("Primeiro combine um pequeno passo na aba Passos."); ir("passos"); return; }
+      if(d.semana[hoje()]) delete d.semana[hoje()];
+      else{ d.semana[hoje()] = 1; semente(1); }
+    }else{
+      if(d[id][hoje()]) delete d[id][hoje()];
+      else{ d[id][hoje()] = 1; semente(1); }
+    }
+    save(); atualizar();
+    aviso(feita(id) ? "Missão marcada como feita." : "Missão desmarcada.");
+    vibrar(30);
+    return;
+  }
+
+  switch(t.id){
+    case "btnDescanso":
+      if(d.descanso[hoje()]) delete d.descanso[hoje()];
+      else d.descanso[hoje()] = 1;
+      save(); atualizar();
+      aviso(d.descanso[hoje()] ? "Dia de descanso registrado. Seu progresso está preservado." : "Dia de descanso desfeito.");
+      return;
+    case "respBtn":
+      if(rodando){
+        paraResp("Exercício interrompido. Tudo bem, você pode tentar de novo.");
+        aviso("Exercício interrompido.", false);
+      }else iniciaResp();
+      return;
+    case "vibBtn":
+      d.vib = !d.vib; save(); aplicar();
+      aviso(d.vib ? "Vibração ligada." : "Vibração desligada.");
+      return;
+    case "ditar":
+      ditar(t.getAttribute("aria-pressed") !== "true");
+      return;
+    case "salvaPasso":
+      if(!passoSel){ aviso("Escolha um passo primeiro."); return; }
+      d.passo = passoSel; save(); montaPassos(); atualizar();
+      aviso("Combinado: " + d.passo + ".");
+      return;
+    case "addContato":
+      var v = $("#nomeContato").value.trim();
+      if(!v){ aviso("Digite um nome."); $("#nomeContato").focus(); return; }
+      d.contatos.push(v); $("#nomeContato").value = "";
+      save(); contatos(); atualizar();
+      aviso("Pessoa adicionada à sua rede de apoio.");
+      return;
+    case "copiar":
+      var txt = $("#msgPronta").textContent.replace(/[“”]/g,"").trim();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(
+          function(){ aviso("Mensagem copiada."); },
+          function(){ aviso("Não foi possível copiar. Selecione o texto e copie."); }
+        );
+      }else aviso("Selecione o texto e copie.");
+      return;
+    case "autoriza":
+      d.aut = !d.aut; save(); aplicar(); painel();
+      aviso(d.aut ? "Resumo exibido." : "Resumo ocultado.");
+      return;
+    case "apagar":
+      if(confirm("Apagar todos os seus dados pessoais da trilha? Isso não pode ser desfeito.")){
+        try{ localStorage.removeItem(KEY); }catch(x){}
+        d = JSON.parse(JSON.stringify(VAZIO));
+        save(); aplicar(); atualizar(); painel(); listaCartas(); semana(); contatos();
+        aviso("Dados apagados.");
+      }
+      return;
+    case "mais": d.fonte = Math.min(200, d.fonte+15); save(); aplicar(); aviso("Letra maior: " + d.fonte + "%."); return;
+    case "menos": d.fonte = Math.max(85, d.fonte-15); save(); aplicar(); aviso("Letra menor: " + d.fonte + "%."); return;
+    case "padrao": d.fonte = 100; save(); aplicar(); aviso("Tamanho padrão."); return;
+    case "bContraste": d.contraste = !d.contraste; save(); aplicar(); aviso(d.contraste ? "Alto contraste ligado." : "Alto contraste desligado."); return;
+    case "bEsp": d.esp = !d.esp; save(); aplicar(); aviso(d.esp ? "Espaçamento ampliado." : "Espaçamento normal."); return;
+    case "bMov": d.mov = !d.mov; save(); aplicar(); aviso(d.mov ? "Animações reduzidas." : "Animações normais."); return;
+    case "bVoz":
+      if(!temVoz){ aviso("Seu aparelho não oferece leitura em voz alta.", false); return; }
+      d.voz = !d.voz; save(); aplicar();
+      if(d.voz) falar("Leitura em voz alta ligada.");
+      else{ try{ speechSynthesis.cancel(); }catch(x){} aviso("Leitura em voz alta desligada.", false); }
+      return;
+    case "bTeste":
+      if(!temVoz){ aviso("Seu aparelho não oferece leitura em voz alta.", false); return; }
+      try{
+        speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance("Olá! Esta é a voz da Trilha do Cuidado.");
+        u.lang = "pt-BR";
+        speechSynthesis.speak(u);
+      }catch(x){}
+      return;
+  }
+
+  if(t.dataset.ritmo){
+    d.ritmo = +t.dataset.ritmo; save();
+    $$("[data-ritmo]").forEach(function(b){ b.setAttribute("aria-pressed", b === t); });
+    aviso("Ritmo de " + d.ritmo + " segundos.");
+    return;
+  }
+  if(t.dataset.emo){
+    var on = t.getAttribute("aria-pressed") !== "true";
+    $$("[data-emo]").forEach(function(b){ b.setAttribute("aria-pressed", "false"); });
+    t.setAttribute("aria-pressed", on);
+    emoSel = on ? t.dataset.emo : "";
+    return;
+  }
+  if(t.dataset.mcat){
+    muralCatSel = t.dataset.mcat;
+    $$("[data-mcat]").forEach(function(b){ b.setAttribute("aria-pressed", b === t); });
+    return;
+  }
+  if(t.dataset.delcarta){
+    d.cartas.splice(+t.dataset.delcarta, 1);
+    save(); listaCartas(); atualizar();
+    aviso("Carta apagada.");
+    return;
+  }
+  if(t.dataset.delmural && firebaseAtivo && db){
+    if(confirm("Excluir seu comentário do mural?")){
+      db.collection("comentarios").doc(t.dataset.delmural).delete().then(function(){
+        aviso("Comentário excluído.");
+      });
+    }
+    return;
+  }
+  if(t.dataset.passo !== undefined && t.classList.contains("chip")){
+    passoSel = t.dataset.passo;
+    $$("[data-passo]").forEach(function(b){ b.setAttribute("aria-pressed", b === t); });
+    return;
+  }
+  if(t.dataset.sem){
+    var k = t.dataset.sem;
+    if(d.semana[k]) delete d.semana[k];
+    else{ d.semana[k] = 1; semente(1); }
+    save(); semana(); atualizar();
+    return;
+  }
+  if(t.dataset.delcont){
+    d.contatos.splice(+t.dataset.delcont, 1);
+    save(); contatos(); atualizar();
+    aviso("Pessoa removida.");
+    return;
+  }
+  if(t.dataset.q && t.dataset.v){
+    resp[t.dataset.q] = t.dataset.v;
+    $$('[data-q="'+t.dataset.q+'"][data-v]').forEach(function(b){ b.setAttribute("aria-pressed", b === t); });
+    return;
+  }
+});
+
+document.addEventListener("submit", function(e){
+  if(e.target.id === "formLogin" || e.target.id === "formCadastro") return;
+  e.preventDefault();
+
+  if(e.target.id === "formCarta"){
+    var c = {
+      data: hoje().split("-").reverse().join("/"),
+      emo: emoSel,
+      c1: $("#c1").value.trim(),
+      c2: $("#c2").value.trim(),
+      c4: $("#c4").value.trim()
+    };
+    if(!c.c1 && !c.c2 && !c.c4){
+      aviso("Escreva ao menos um campo antes de guardar.");
+      $("#c1").focus();
+      return;
+    }
+    d.cartas.push(c); semente(2); save(); e.target.reset(); emoSel = "";
+    $$("[data-emo]").forEach(function(b){ b.setAttribute("aria-pressed", "false"); });
+    listaCartas(); atualizar();
+    aviso("Carta guardada de forma privada.");
+  }
+
+  if(e.target.id === "formTermo"){
+    if(resp.q1 === null || resp.q2 === null){
+      aviso("Responda as duas perguntas.");
+      return;
+    }
+    var s = (+resp.q1) + (+resp.q2), texto, msg;
+    if(s >= 3){
+      texto = "Atenção: converse com a equipe";
+      msg = "Seu resultado sugere que vale conversar com um profissional de saúde. Isso não é um diagnóstico. Procure a unidade de saúde ou o CAPS e, se precisar de apoio agora, ligue 188.";
+    }else{
+      texto = "Resultado tranquilo";
+      msg = "Seu resultado não indica necessidade imediata de avaliação, mas se você se sente mal, procure a equipe de saúde mesmo assim. Você pode refazer em duas semanas.";
+    }
+    d.termo = {texto:texto, data:hoje().split("-").reverse().join("/"), pontos:s};
+    semente(2); save(); atualizar();
+    $("#termoRes").innerHTML = '<div class="card'+(s>=3?' warn':'')+'"><h3>'+texto+' ('+s+' de 6 pontos)</h3><p>'+msg+'</p></div>';
+    aviso(texto + ". " + msg);
+  }
+
+  if(e.target.id === "formMural"){
+    if(!firebaseAtivo || !db || !usuarioAtual){
+      aviso("Entre na sua conta para publicar no mural.");
+      return;
+    }
+    var txtMural = $("#muralTxt").value.trim();
+    if(!txtMural){
+      aviso("Escreva seu comentário antes de publicar.");
+      $("#muralTxt").focus();
+      return;
+    }
+    var anon = $("#muralAnon").checked;
+    var nomeAutor = anon ? "Anônimo(a)" : (usuarioAtual.displayName || "Participante");
+    db.collection("comentarios").add({
+      uid: usuarioAtual.uid,
+      autor: nomeAutor,
+      categoria: muralCatSel,
+      texto: txtMural,
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(){
+      $("#muralTxt").value = "";
+      $("#muralCount").textContent = "0 de 500 caracteres";
+      aviso("Comentário publicado no mural!");
+    }).catch(function(){
+      aviso("Não foi possível publicar agora. Verifique sua conexão.");
+    });
+  }
+});
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape" && temVoz){ try{ speechSynthesis.cancel(); }catch(x){} }
+  if(e.altKey && /^[1-9]$/.test(e.key)){
+    e.preventDefault();
+    var idx = (+e.key) - 1;
+    if(TELAS[idx]) ir(TELAS[idx][0]);
+  }
+});
+
+/* Inicialização */
+montaTabs(); montaHumor(); montaEmo(); montaPassos(); montaTermo(); contatos(); atualizaZap();
+aplicar(); atualizar();
+$$("[data-ritmo]").forEach(function(b){ b.setAttribute("aria-pressed", +b.dataset.ritmo === d.ritmo); });
+
+function rota(){
+  var h = (location.hash || "").replace("#/", "");
+  var ok = TELAS.some(function(t){ return t[0] === h; });
+  ir(ok ? h : "hoje", ok);
+}
+window.addEventListener("hashchange", function(){
+  var h = (location.hash || "").replace("#/", "");
+  if(TELAS.some(function(t){ return t[0] === h; }) && $("#t-"+h).hidden) ir(h);
+});
+
+function rede(){
+  var n = $("#net");
+  if(!n) return;
+  var on = navigator.onLine !== false;
+  n.textContent = on ? "Conectado" : "Sem internet (modo offline)";
+  n.className = "net" + (on ? "" : " off");
+}
+window.addEventListener("online", rede);
+window.addEventListener("offline", rede);
+rede();
+
+var pedido = null;
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();
+  pedido = e;
+  var b = $("#bInst");
+  if(b) b.hidden = false;
+});
+window.addEventListener("appinstalled", function(){
+  var b = $("#bInst");
+  if(b) b.hidden = true;
+  aviso("Aplicativo instalado.");
+});
+$("#bInst").addEventListener("click", function(){
+  if(!pedido) return;
+  pedido.prompt();
+  pedido = null;
+  this.hidden = true;
+});
+
+$("#bExp").addEventListener("click", function(){
+  try{
+    var blob = new Blob([JSON.stringify({app:"trilha-do-cuidado",versao:"1.0.0",dados:d}, null, 2)], {type:"application/json"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "trilha-do-cuidado-copia-" + hoje() + ".json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+    aviso("Cópia exportada.");
+  }catch(x){
+    aviso("Não foi possível exportar neste navegador.");
+  }
+});
+
+$("#fImp").addEventListener("change", function(){
+  var f = this.files && this.files[0];
+  if(!f) return;
+  var r = new FileReader();
+  r.onload = function(){
+    try{
+      var o = JSON.parse(r.result);
+      if(!o || o.app !== "trilha-do-cuidado" || typeof o.dados !== "object") throw 0;
+      d = Object.assign(JSON.parse(JSON.stringify(VAZIO)), o.dados);
+      save(); aplicar(); montaPassos(); montaHumor(); atualizar();
+      aviso("Cópia importada com sucesso.");
+    }catch(x){
+      aviso("Arquivo inválido. Use uma cópia exportada pela Trilha do Cuidado.");
+    }
+  };
+  r.readAsText(f);
+  this.value = "";
+});
+
+$("#bPrint").addEventListener("click", function(){ window.print(); });
+$("#txtPwa").textContent = ("serviceWorker" in navigator)
+  ? "Depois de aberto uma vez com internet, o site funciona sem conexão."
+  : "Este navegador não permite uso sem internet.";
+
+if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
+  navigator.serviceWorker.register("sw.js").catch(function(){});
+}
+rota();
+})();
+</script>
+</body>
+</html>
