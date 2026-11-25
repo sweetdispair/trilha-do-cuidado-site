@@ -148,7 +148,6 @@ fieldset{min-width:0}
   </div>
 </header>
 
-<!-- BARRA DE CONTA LOGADA -->
 <div id="userBar" class="auth-bar noprint" hidden>
   <div>
     <strong id="userNome">Olá!</strong>
@@ -157,7 +156,6 @@ fieldset{min-width:0}
   <button class="btn sm" id="btnSair" type="button">Sair da conta</button>
 </div>
 
-<!-- ÁREA DE LOGIN / CADASTRO -->
 <section id="authCard" class="card noprint" aria-labelledby="h-auth">
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
     <h2 id="h-auth" style="margin:0">Acesse sua conta</h2>
@@ -523,12 +521,12 @@ fieldset{min-width:0}
 "use strict";
 
 var FIREBASE_CONFIG = {
-  apiKey: "COLE_SUA_API_KEY_AQUI",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-  storageBucket: "SEU_PROJETO.appspot.com",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:000000000000"
+  apiKey: "AIzaSyAQIz2kUJJ93NHjRgiR5bP56n3M5maMc-c",
+  authDomain: "trilha-do-cuidado-site-6900f.firebaseapp.com",
+  projectId: "trilha-do-cuidado-site-6900f",
+  storageBucket: "trilha-do-cuidado-site-6900f.firebasestorage.app",
+  messagingSenderId: "838590136342",
+  appId: "1:838590136342:web:7ba2e37fd8be9e3983b537"
 };
 
 var firebaseAtivo = !!(window.firebase && FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf("COLE_SUA") === -1);
@@ -596,7 +594,6 @@ function save(){
 
 loadLocal();
 
-/* Voz, notificações e vibração */
 var temVoz = ("speechSynthesis" in window);
 function falar(t){
   if(!d.voz || !temVoz) return;
@@ -629,7 +626,6 @@ function setEstado(btn, on, txtOn, txtOff){
   if(e) e.textContent = on ? txtOn : txtOff;
 }
 
-/* Ajustes de acessibilidade */
 function aplicar(){
   document.documentElement.style.fontSize = d.fonte + "%";
   document.body.classList.toggle("contraste", !!d.contraste);
@@ -650,7 +646,6 @@ if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches &
   d.mov = true;
 }
 
-/* Autenticação e sincronização */
 function atualizaUIAuth(){
   var logado = !!usuarioAtual;
   $("#userBar").hidden = !logado;
@@ -804,7 +799,6 @@ $("#btnSair").addEventListener("click", function(){
   });
 });
 
-/* Navegação entre abas */
 var TELAS = [
   ["hoje","Hoje","🏡"],
   ["respira","Respirar","🌬️"],
@@ -848,7 +842,6 @@ function ir(id, foco){
   aviso("Tela " + nome + ".");
 }
 
-/* Tela Hoje (Trilha diária) */
 var HUMORES = [["1","😞","Muito mal"],["2","🙁","Mal"],["3","😐","Mais ou menos"],["4","🙂","Bem"],["5","😄","Muito bem"]];
 function montaHumor(){
   var h = "";
@@ -961,7 +954,6 @@ function badges(c){
   $("#badges").innerHTML = h;
 }
 
-/* Tela Respirar */
 var rodando = false, timer = null;
 function paraResp(msg){
   rodando = false;
@@ -995,7 +987,6 @@ function iniciaResp(){
   })();
 }
 
-/* Tela Cartas */
 var EMO = ["Tristeza","Ansiedade","Raiva","Culpa","Medo","Cansaço","Calma","Alegria"];
 var emoSel = "";
 function montaEmo(){
@@ -1057,7 +1048,6 @@ function ditar(on){
   }
 }
 
-/* Tela Passos */
 var PASSOS = [
   "Caminhar dez minutos",
   "Ligar para alguém de confiança",
@@ -1087,7 +1077,6 @@ function semana(){
   $("#semana").innerHTML = h;
 }
 
-/* Tela Termômetro */
 var OPC = [["0","Nunca"],["1","Alguns dias"],["2","Mais da metade"],["3","Quase todo dia"]];
 function montaTermo(){
   $$("#formTermo .scale").forEach(function(sc){
@@ -1100,7 +1089,6 @@ function montaTermo(){
 }
 var resp = {q1:null, q2:null};
 
-/* Tela Apoio */
 function contatos(){
   var h = "";
   d.contatos.forEach(function(c, i){
@@ -1113,7 +1101,6 @@ function atualizaZap(){
   $("#zap").setAttribute("href", "https://wa.me/?text=" + encodeURIComponent(msg));
 }
 
-/* Tela Mural (Comentários públicos / Feedback) */
 var muralCatSel = "Relato";
 $("#muralTxt").addEventListener("input", function(){
   $("#muralCount").textContent = this.value.length + " de 500 caracteres";
@@ -1154,7 +1141,6 @@ function iniciaMural(){
     });
 }
 
-/* Tela Painel */
 function painel(){
   var ks = Object.keys(d.humor);
   $("#pDias").textContent = d.aut ? calc().dias : "oculto";
@@ -1216,7 +1202,6 @@ function confete(){
   })();
 }
 
-/* Interações gerais */
 document.addEventListener("click", function(e){
   var t = e.target.closest("button,a");
   if(!t) return;
@@ -1456,7 +1441,6 @@ document.addEventListener("keydown", function(e){
   }
 });
 
-/* Inicialização */
 montaTabs(); montaHumor(); montaEmo(); montaPassos(); montaTermo(); contatos(); atualizaZap();
 aplicar(); atualizar();
 $$("[data-ritmo]").forEach(function(b){ b.setAttribute("aria-pressed", +b.dataset.ritmo === d.ritmo); });
