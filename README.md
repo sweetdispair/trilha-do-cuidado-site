@@ -11,6 +11,7 @@
     <img src="https://img.shields.io/badge/Uso-Não_Comercial-8a3b12?style=for-the-badge" alt="Uso Não Comercial">
   </p>
 
+
   <p>
     <a href="#-sobre-o-projeto">🌱 Sobre</a> •
     <a href="#-funcionalidades">✨ Funcionalidades</a> •
